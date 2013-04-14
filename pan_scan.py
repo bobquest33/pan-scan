@@ -3,6 +3,7 @@ import os
 import sys
 import re
 import mimetypes
+import argparse
 
 
 # regex taken from http://www.regular-expressions.info/creditcard.html for:
@@ -77,3 +78,11 @@ class PanScanner(object):
     def line_log_message(self):
         return "* Card number found at line %(line)s in interval: %(span)s\n"
 
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='A pan scanner.')
+    parser.add_argument('-d', '--directories', nargs='+', required=True,
+        help='a list of directories to scan recursively')
+    args = parser.parse_args()
+
+    PanScanner(args.directories).search()
