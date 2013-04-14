@@ -117,3 +117,7 @@ class PanScannerTest(unittest.TestCase):
         def log_matches(matches):
             self._matches = matches
         pan_scanner.log = log_matches
+
+
+if __name__ == '__main__':
+    unittest.main()
