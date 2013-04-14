@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+import mimetypes
+
+
+def is_non_binary(file_path):
+    """ check if mimetype matches 'text/*'
+    """
+    mimetype = mimetypes.guess_type(file_path)[0] or ""
+    return mimetype[0:5] == 'text/'
 
 
 class PanScanner(object):
