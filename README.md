@@ -22,3 +22,11 @@ Found card number in /dir1/somewhere/deep/down/in/a/forgotten/recess.log:
 Found card number in /dir3/another/hidding/place.py:
 * Card number found at line 1 in interval: (22, 38)
 ```
+
+Test
+----
+Don't trust other then yourself? Test the pan scanner yourself:
+
+```
+$ python tests/base.py
+```
