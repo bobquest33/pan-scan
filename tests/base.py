@@ -15,7 +15,7 @@ class PanScanner(PanScanner):
     """ replaces `self.log` to save log internally in `self._log`
     """
     def __init__(self, dirs=None):
-        super(PanScanner, self).__init__()
+        super(PanScanner, self).__init__(dirs)
         self._log = []
 
     @property
