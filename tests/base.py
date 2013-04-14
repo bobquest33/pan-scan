@@ -23,6 +23,20 @@ class PanScanner(PanScanner):
         return self._log.append
 
 
+class NonBinaryCheckerTest(unittest.TestCase):
+    def test_png(self):
+        filename = get_absolute_path('test_dir/binary.png')
+        self.assertFalse(is_non_binary(filename))
+
+    def test_log(self):
+        filename = get_absolute_path('test_dir/deeper/contains.log')
+        self.assertTrue(is_non_binary(filename))
+
+    def test_py(self):
+        filename = get_absolute_path('test_dir/without.py')
+        self.assertTrue(is_non_binary(filename))
+
+
 class PanScannerTest(unittest.TestCase):
     def test_iter_dir_absolute_path(self):
         ps = PanScanner()
