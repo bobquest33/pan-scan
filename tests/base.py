@@ -11,6 +11,18 @@ def get_absolute_path(relative_path):
     return os.path.join(path, relative_path)
 
 
+class PanScanner(PanScanner):
+    """ replaces `self.log` to save log internally in `self._log`
+    """
+    def __init__(self, dirs=None):
+        super(PanScanner, self).__init__()
+        self._log = []
+
+    @property
+    def log_func(self):
+        return self._log.append
+
+
 class PanScannerTest(unittest.TestCase):
     def test_iter_dir_absolute_path(self):
         ps = PanScanner()
