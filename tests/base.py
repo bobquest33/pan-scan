@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
+import os
 import unittest
 from pan_scan import PanScanner, is_non_binary
+
+
+path = os.path.dirname(os.path.abspath(__file__))
+
+
+def get_absolute_path(relative_path):
+    return os.path.join(path, relative_path)
 
 
 class PanScannerTest(unittest.TestCase):
