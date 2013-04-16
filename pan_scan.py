@@ -4,6 +4,7 @@ import sys
 import re
 import mimetypes
 import argparse
+import baluhn
 
 
 # regex taken from http://www.regular-expressions.info/creditcard.html for:
@@ -49,12 +50,17 @@ class PanScanner(object):
             with open(self.current_filename, 'r') as f:
                 for num, line in enumerate(f, 1):
                     self.current_line_number = num
-                    self.search_line(line)
+                    matches = self.search_string(line)
+                    if matches:
+                        self.log(matches)
 
-    def search_line(self, line):
-        matches = [m for m in self.reqex.finditer(line)]
-        if matches:
-            self.log(matches)
+    def search_string(self, string):
+        matches = []
+        for match in self.reqex.finditer(string):
+            card_number = match.group(0)
+            if baluhn.verify(card_number):
+                matches.append(match)
+        return matches
 
     def log(self, matches):
         if not self.filename_logged:
