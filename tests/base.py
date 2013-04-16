@@ -60,7 +60,7 @@ class PanScannerTest(unittest.TestCase):
     def test_search_file_binary(self):
         searched_lines = []
         ps = PanScanner()
-        ps.search_line = lambda l: searched_lines.append(l)
+        ps.search_string = lambda l: searched_lines.append(l)
 
         filename = get_absolute_path('test_dir/binary.png')
         ps.search_file(filename)
@@ -89,34 +89,27 @@ class PanScannerTest(unittest.TestCase):
         matches_string = ps.matches_to_string(matches)
         self.assertEqual(matches_string, '(1, 2), (10, 11)')
 
-    def test_search_line_one_match(self):
+    def test_search_string_one_match(self):
         ps = PanScanner()
-        self.overwrite_log(ps)
-        ps.search_line('there is one match: 4111111111111111')
-        self.assertEqual(len(self._matches), 1)
-        self.assertEqual(self._matches[0].span(), (20, 36))
+        matches = ps.search_string('there is one match: 4111111111111111')
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0].span(), (20, 36))
+        self.assertEqual(matches[0].group(0), '4111111111111111')
 
-    def test_search_line_two_match(self):
+    def test_search_string_two_match(self):
         ps = PanScanner()
-        self.overwrite_log(ps)
-        ps.search_line('there is one match: 4111111111111111'
-                       'no two matches (!): 4111111111111111')
-        self.assertEqual(len(self._matches), 2)
-        self.assertEqual(self._matches[0].span(), (20, 36))
-        self.assertEqual(self._matches[1].span(), (56, 72))
+        matches = ps.search_string('there is one match: 4111111111111111'
+                                   'no two matches (!): 4111111111111111')
+        self.assertEqual(len(matches), 2)
+        self.assertEqual(matches[0].span(), (20, 36))
+        self.assertEqual(matches[1].span(), (56, 72))
+        self.assertEqual(matches[0].group(0), '4111111111111111')
+        self.assertEqual(matches[1].group(0), '4111111111111111')
 
-    def test_search_line_no_matches(self):
+    def test_search_string_no_matches(self):
         ps = PanScanner()
-        self.overwrite_log(ps)
-        ps.search_line('there is no match :(')
-        self.assertRaises(AttributeError, getattr, self, '_matches')
-
-    def overwrite_log(self, pan_scanner):
-        """ overwrites `PanScanner.log` to test `PanScanner.search_line
-        """
-        def log_matches(matches):
-            self._matches = matches
-        pan_scanner.log = log_matches
+        matches = ps.search_string('there is no match :(')
+        self.assertEqual(len(matches), 0)
 
 
 if __name__ == '__main__':
