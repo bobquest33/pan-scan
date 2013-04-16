@@ -111,6 +111,30 @@ class PanScannerTest(unittest.TestCase):
         matches = ps.search_string('there is no match :(')
         self.assertEqual(len(matches), 0)
 
+    def test_search_string_number_surrounded(self):
+        ps = PanScanner()
+        matches = ps.search_string('3334111111111111111333')
+        self.assertEqual(len(matches), 0)
+
+    def test_search_string_not_surrounded(self):
+        ps = PanScanner()
+        matches = ps.search_string('4111111111111111')
+        self.assertEqual(len(matches), 1)
+
+    def test_search_string_letter_surrounded(self):
+        ps = PanScanner()
+        matches = ps.search_string('asd4111111111111111asd')
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0].group(0), '4111111111111111')
+
+    def test_search_string_non_luhn(self):
+        ps = PanScanner()
+        n = '4111111111111113'
+        test_match = ps.reqex.match(n)
+        self.assertTrue(test_match)
+        matches = ps.search_string(n)
+        self.assertEqual(len(matches), 0)
+
 
 if __name__ == '__main__':
     unittest.main()
