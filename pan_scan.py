@@ -8,10 +8,12 @@ import argparse
 
 # regex taken from http://www.regular-expressions.info/creditcard.html for:
 # Visa, MasterCard, American Express, Diners Club, Discover, and JCB cards
-card_regex = re.compile(r'(?:4[0-9]{12}(?:[0-9]{3})?'
-                        r'|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}'
-                        r'|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}'
-                        r'|(?:2131|1800|35\d{3})\d{11})')
+card_regex = re.compile(
+    r'(?<![0-9])'  # don't catch card numbers in longer number sequence
+    r'(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|'
+    r'5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|'
+    r'[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})'
+    r'(?![0-9])')   # don't catch card numbers in longer number sequence
 
 
 def is_non_binary(file_path):
