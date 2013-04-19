@@ -38,6 +38,7 @@ class PanScanner(object):
         for d in self.dirs:
             for filename in self.iter_dir(d):
                 self.search_file(filename)
+        self.log_failed_to_open()
 
     def iter_dir(self, directory):
         for root, dirs, files in os.walk(directory):
@@ -77,6 +78,12 @@ class PanScanner(object):
 
     def matches_to_string(self, matches):
         return ", ".join((str(m.span()) for m in matches))
+
+    def log_failed_to_open(self):
+        if self.failed_to_open:
+            headline = "Failed to open:\n"
+            filenames = ["* %s\n" % n for n in self.failed_to_open]
+            self.log_func(headline + ''.join(filenames))
 
     @property
     def log_func(self):
