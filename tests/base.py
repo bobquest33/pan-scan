@@ -66,6 +66,12 @@ class PanScannerTest(unittest.TestCase):
         ps.search_file(filename)
         self.assertEqual(searched_lines, [])
 
+    def test_search_missing_file(self):
+        ps = PanScanner()
+        path = get_absolute_path('test_dir/does_not_exist.txt')
+        ps.search_file(path)
+        self.assertEqual(ps.failed_to_open, [path])
+
     def test_search(self):
         directory = get_absolute_path('test_dir')
         ps = PanScanner([directory])
