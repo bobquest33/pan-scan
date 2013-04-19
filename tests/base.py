@@ -97,6 +97,18 @@ class PanScannerTest(unittest.TestCase):
         matches_string = ps.matches_to_string(matches)
         self.assertEqual(matches_string, '(1, 2), (10, 11)')
 
+    def test_log_failed_to_open_one(self):
+        ps = PanScanner()
+        ps.failed_to_open = ['/testfile.txt']
+        ps.log_failed_to_open()
+        self.assertEqual(ps._log, ["Failed to open:\n* /testfile.txt\n"])
+
+    def test_log_failed_to_open_none(self):
+        ps = PanScanner()
+        ps.failed_to_open = []
+        ps.log_failed_to_open()
+        self.assertEqual(len(ps._log), 0)
+
     def test_search_string_one_match(self):
         ps = PanScanner()
         matches = ps.search_string('there is one match: 4111111111111111')
