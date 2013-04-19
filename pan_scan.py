@@ -32,6 +32,7 @@ class PanScanner(object):
         self.current_filename = None
         self.current_line_number = None
         self.filename_logged = False
+        self.failed_to_open = []
 
     def search(self):
         for d in self.dirs:
@@ -47,12 +48,15 @@ class PanScanner(object):
         self.current_filename = filename
         if is_non_binary(self.current_filename):
             self.filename_logged = False
-            with open(self.current_filename, 'r') as f:
-                for num, line in enumerate(f, 1):
-                    self.current_line_number = num
-                    matches = self.search_string(line)
-                    if matches:
-                        self.log(matches)
+            try:
+                with open(self.current_filename, 'r') as f:
+                    for num, line in enumerate(f, 1):
+                        self.current_line_number = num
+                        matches = self.search_string(line)
+                        if matches:
+                            self.log(matches)
+            except IOError:
+                self.failed_to_open.append(self.current_filename)
 
     def search_string(self, string):
         matches = []
