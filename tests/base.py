@@ -56,6 +56,7 @@ class PanScannerTest(unittest.TestCase):
             '* Card number found at line 1 in interval: (28, 44)\n',
             '* Card number found at line 2 in interval: (16, 32), (57, 73)\n'
         ])
+        self.assertEqual(len(ps.failed_to_open), 0)
 
     def test_search_file_binary(self):
         searched_lines = []
@@ -65,6 +66,7 @@ class PanScannerTest(unittest.TestCase):
         filename = get_absolute_path('test_dir/binary.png')
         ps.search_file(filename)
         self.assertEqual(searched_lines, [])
+        self.assertEqual(len(ps.failed_to_open), 0)
 
     def test_search_missing_file(self):
         ps = PanScanner()
