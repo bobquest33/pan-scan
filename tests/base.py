@@ -121,6 +121,20 @@ class PanScannerTest(unittest.TestCase):
         matches = ps.search_string('4111111111111111')
         self.assertEqual(len(matches), 1)
 
+    def test_search_string_dot_surrounded(self):
+        ps = PanScanner()
+        matches = ps.search_string('.4111111111111111')
+        self.assertEqual(len(matches), 0)
+        matches = ps.search_string('4111111111111111.')
+        self.assertEqual(len(matches), 0)
+
+    def test_search_string_comma_surrounded(self):
+        ps = PanScanner()
+        matches = ps.search_string(',4111111111111111')
+        self.assertEqual(len(matches), 0)
+        matches = ps.search_string('4111111111111111,')
+        self.assertEqual(len(matches), 0)
+
     def test_search_string_letter_surrounded(self):
         ps = PanScanner()
         matches = ps.search_string('asd4111111111111111asd')
