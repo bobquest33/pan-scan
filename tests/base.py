@@ -14,8 +14,9 @@ def get_absolute_path(relative_path):
 class PanScanner(PanScanner):
     """ replaces `self.log` to save log internally in `self._log`
     """
-    def __init__(self, dirs=None):
-        super(PanScanner, self).__init__(dirs)
+    def __init__(self, dirs=None, ignore_test_card_numbers=False):
+        super(PanScanner, self).__init__(dirs,
+            ignore_test_card_numbers=ignore_test_card_numbers)
         self._log = []
 
     @property
