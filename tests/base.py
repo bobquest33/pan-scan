@@ -170,6 +170,13 @@ class PanScannerTest(unittest.TestCase):
         matches = ps.search_string(n)
         self.assertEqual(len(matches), 0)
 
+    def test_search_string_ignore_test_card_numbers(self):
+        ps = PanScanner(ignore_test_card_numbers=True)
+        matches = ps.search_string('4111111111111111')
+        self.assertEqual(len(matches), 0)
+        matches = ps.search_string('4716334938933348')
+        self.assertEqual(len(matches), 1)
+
 
 if __name__ == '__main__':
     unittest.main()
