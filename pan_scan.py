@@ -87,7 +87,9 @@ class PanScanner(object):
         for match in self.reqex.finditer(string):
             card_number = match.group(0)
             if baluhn.verify(card_number):
-                matches.append(match)
+                if not (self.ignore_test_card_numbers
+                   and card_number in test_card_numbers):
+                    matches.append(match)
         return matches
 
     def log(self, matches):
