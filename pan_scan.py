@@ -49,8 +49,9 @@ class PanScanner(object):
     reqex = card_regex
     test_card_numbers = test_card_numbers
 
-    def __init__(self, dirs=None):
+    def __init__(self, dirs=None, ignore_test_card_numbers=True):
         self.dirs = dirs or []
+        self.ignore_test_card_numbers = ignore_test_card_numbers
         self.current_filename = None
         self.current_line_number = None
         self.filename_logged = False
