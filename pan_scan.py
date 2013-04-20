@@ -17,6 +17,27 @@ card_regex = re.compile(
     r'(?![0-9.,])')   # don't catch card numbers in longer number sequence
 
 
+test_card_numbers = [
+    "5431111111111111",
+    "341111111111111",
+    "6011601160116611",
+    "378282246310005",
+    "371449635398431",
+    "378734493671000",
+    "30569309025904",
+    "38520000023237",
+    "6011111111111117",
+    "6011000990139424",
+    "3530111333300000",
+    "3566002020360505",
+    "5555555555554444",
+    "5105105105105100",
+    "4111111111111111",
+    "4012888888881881",
+    "4222222222222"
+]
+
+
 def is_non_binary(file_path):
     """ check if mimetype matches 'text/*'
     """
@@ -26,6 +47,7 @@ def is_non_binary(file_path):
 
 class PanScanner(object):
     reqex = card_regex
+    test_card_numbers = test_card_numbers
 
     def __init__(self, dirs=None):
         self.dirs = dirs or []
